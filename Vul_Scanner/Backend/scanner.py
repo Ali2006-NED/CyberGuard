@@ -5,6 +5,7 @@ import shutil
 
 
 def run_static_analysis(filepath):
+
     os.makedirs(SCAN_ROOT,exist_ok=True)
 
     language = detect_language(filepath)
@@ -21,6 +22,7 @@ def run_static_analysis(filepath):
     print(f"CodeQL scan completed successfully for {language}.")
     print(f"Found {len(findings)} vulnerabilities or issues.")
 
+
     return findings
 
 LANGUAGE_MAP = {".py": "python",
@@ -29,7 +31,7 @@ LANGUAGE_MAP = {".py": "python",
                 ".cc": "cpp",
                 ".h": "cpp",
                 ".java": "java"}
-SCAN_ROOT = "scans"
+SCAN_ROOT = "\\scans\\"
 
 
 def detect_language(file_or_folder):
@@ -60,7 +62,7 @@ def prepare_scan_folder(filepath, target_folder):
 
 def run_codeql_run(source_path, language):
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    db_path = os.path.join(BASE_DIR,SCAN_ROOT, "codeql-db")
+    db_path = os.path.join(BASE_DIR,SCAN_ROOT, "\\codeql-db")
     if os.path.exists(db_path):
         shutil.rmtree(db_path)
 
@@ -109,3 +111,8 @@ def parse_codeql_output(output_json):
     return results
 
 
+if __name__ == '__main__':
+    file_path = 'C:\\Users\\HC\\PycharmProjects\\CyberGuard\\Vul_Scanner\\Backend\\test.py'
+    scan_res = run_static_analysis(file_path)
+    for res in scan_res:
+        print(res)
